@@ -18,15 +18,14 @@ jobs:
       # Download and cache dependencies
       - restore_cache:
           keys:
-          - parkwayCore-{{ checksum "ParkwayCore/pom.xml" }}
+            - parkwayCore-{{ checksum "ParkwayCore/pom.xml" }}
       - run: rm -rf ~/.m2/repository/com/parkway   
       - run: cd ParkwayCore && mvn clean package && mvn install
 
       - save_cache:
-          paths:
-            - ~/.m2
-          key: ParkwayCore-{{ checksum "ParkwayCore/pom.xml" }}
-        
+            key: ParkwayCore-{{ checksum "ParkwayCore/pom.xml" }}
+            paths:
+             - ~/.m2        
       # run tests!
       - run: cd ParkwayCore && mvn integration-test
       
