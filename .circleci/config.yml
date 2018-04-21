@@ -19,7 +19,7 @@ jobs:
       - restore_cache:
           keys:
           - parkwayCore-{{ checksum "ParkwayCore/pom.xml" }}
-      - run: rm -rf ~/.m2/repository/com/parkway   
+      #- run: rm -rf ~/.m2/repository/com/parkway   
       - run: cd ParkwayCore && mvn clean package && mvn install
 
       - save_cache:
@@ -103,12 +103,12 @@ workflows:
   version: 2
   build_and_test:
     jobs:
-      #- MedicalServices
+      - MedicalServices
       - ParkwayCore            
-      #- ParkwayCommon
+      - ParkwayCommon
            
-      #- MedicalServices:
-       #    requires:
-        #     - ParkwayCore
-        #     - ParkwayCommon
+      - MedicalServices:
+           requires:
+             - ParkwayCore
+             - ParkwayCommon
    
