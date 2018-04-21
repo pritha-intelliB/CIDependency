@@ -19,7 +19,7 @@ jobs:
       - restore_cache:
           keys:
           - parkwayCore-{{ checksum "ParkwayCore/pom.xml" }}
-         
+      - run: rm -rf ~/.m2/repository/com/parkway   
       - run: cd ParkwayCore && mvn clean package && mvn install
 
       - save_cache:
@@ -29,7 +29,7 @@ jobs:
         
       # run tests!
       - run: cd ParkwayCore && mvn integration-test
-      #- run: mkdir .m2/repository/com/parkway
+      
       #- run: cp -r ParkwayCore/target/ParkwayCore-0.1.jar ~/.m2/repository/com/parkway/ParkwayCore/0.1/
       #- run: cp ParkwayCore/pom.xml ~/.m2/repository/com/parkway/ParkwayCore/0.1/ParkwayCore-0.1.pom
       #- run: ls .m2
