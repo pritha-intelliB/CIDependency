@@ -103,12 +103,12 @@ workflows:
   version: 2
   build_and_test:
     jobs:
-      - MedicalServices
+      #- MedicalServices
       - ParkwayCore            
-      - ParkwayCommon
+      #- ParkwayCommon
            
-      - MedicalServices:
-           requires:
-             - ParkwayCore
-             - ParkwayCommon
+      #- MedicalServices:
+       #    requires:
+        #     - ParkwayCore
+        #     - ParkwayCommon
    
