@@ -20,7 +20,7 @@ jobs:
           keys:
             - parkwayCore-{{ checksum "ParkwayCore/pom.xml" }}
       - run: rm -rf ~/.m2/repository/com/parkway   
-      - run: mvn dependency:go-offline
+      - run: cd ParkwayCore && mvn dependency:go-offline
       - run: cd ParkwayCore && mvn package && mvn install
 
       - save_cache:
