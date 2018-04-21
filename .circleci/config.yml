@@ -1,0 +1,114 @@
+# Java Maven CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-java/ for more details
+#
+version: 2
+jobs:
+  ParkwayCore:
+    docker:
+      # specify the version you desire here
+      - image: circleci/openjdk:8-jdk
+
+    working_directory: ~/CIDependency
+       
+    steps:
+      - checkout
+        
+
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+          - parkwayCore-{{ checksum "ParkwayCore/pom.xml" }}
+         
+      - run: cd ParkwayCore && mvn clean package && mvn install
+
+      - save_cache:
+          paths:
+            - ~/.m2
+          key: ParkwayCore-{{ checksum "ParkwayCore/pom.xml" }}
+        
+      # run tests!
+      - run: cd ParkwayCore && mvn integration-test
+      #- run: mkdir .m2/repository/com/parkway
+      #- run: cp -r ParkwayCore/target/ParkwayCore-0.1.jar ~/.m2/repository/com/parkway/ParkwayCore/0.1/
+      #- run: cp ParkwayCore/pom.xml ~/.m2/repository/com/parkway/ParkwayCore/0.1/ParkwayCore-0.1.pom
+      #- run: ls .m2
+      - store_artifacts:
+          path: ParkwayCore/target/ParkwayCore-0.1.jar
+          destination: target/ParkwayCore-0.1.jar
+
+  ParkwayCommon:
+    docker:
+      # specify the version you desire here
+      - image: circleci/openjdk:8-jdk
+
+    working_directory: ~/CIDependency
+       
+    steps:
+      - checkout
+      
+      ## Download and cache dependencies
+      - restore_cache:
+          keys:
+          - parkwaycommon-{{ checksum "ParkwayCommon/pom.xml" }}
+         
+      - run: cd ParkwayCommon && mvn clean package && mvn install
+
+      - save_cache:
+          paths:
+            - ~/.m2
+          key: ParkwayCommon-{{ checksum "ParkwayCommon/pom.xml" }}
+        
+      # run tests!
+      - run: cd ParkwayCommon && mvn integration-test
+      #- run: cp -r ParkwayCore/target/ParkwayCore-0.1.jar ~/.m2/repository/com/parkway/ParkwayCore/0.1/
+      #- run: cp ParkwayCore/pom.xml ~/.m2/repository/com/parkway/ParkwayCore/0.1/ParkwayCore-0.1.pom
+      #- run: ls ~/.m2/repository/com/parkway/ParkwayCore/0.1
+      - store_artifacts:
+          path: ParkwayCommon/target/ParkwayCommon-0.1.jar
+          destination: target/ParkwayCommon-0.1.jar
+
+  MedicalSerivces:
+    docker:
+      # specify the version you desire here
+      - image: circleci/openjdk:8-jdk
+     
+    
+    working_directory: ~/CIDependency
+       
+    steps:
+      - checkout
+        
+
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+          - MedicalServices-{{ checksum "MedicalServices/pom.xml" }}
+         
+      - run: cd MedicalServices && mvn clean package
+
+      - save_cache:
+          paths:
+            - ~/.m2
+          key: MedicalServices-{{ checksum "MedicalServices/pom.xml" }}
+        
+      # run tests!
+      - run: cd MedicalServices && mvn integration-test
+
+      - store_artifacts:
+          path: MedicalServices/target/medical-0.1.war
+          destination: target/medical-0.1.war
+
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - MedicalServices
+      - ParkwayCore            
+      - ParkwayCommon
+           
+      #- MedicalServices:
+           #requires:
+             #- ParkwayCore
+             #- ParkwayCommon
+   
