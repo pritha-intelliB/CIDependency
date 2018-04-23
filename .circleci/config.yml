@@ -2,19 +2,11 @@
 #
 # Check https://circleci.com/docs/2.0/language-java/ for more details
 #
-
 version: 2
 jobs:
-
-#defaults: &defaults
-#  working_directory: ~/CIDependency
- # docker:
- #   - image: circleci/openjdk:8-jdk
-    
-   ParkwayCore:
-     #<<: *defaults
+  ParkwayCore:
     docker:
-     #  specify the version you desire here
+      # specify the version you desire here
       - image: circleci/openjdk:8-jdk
 
     working_directory: ~/CIDependency
@@ -27,9 +19,8 @@ jobs:
       - restore_cache:
           keys:
             - parkwayCore-{{ checksum "ParkwayCore/pom.xml" }}
-      #- run: rm -rf ~/.m2/repository/com
-      - run: cd ParkwayCore && mvn dependency:go-offline
-      - run: cd ParkwayCore && mvn package && mvn install
+      - run: rm -rf ~/.m2/repository/com/parkway   
+      - run: cd ParkwayCore && mvn clean package && mvn install
 
       - save_cache:
             key: ParkwayCore-{{ checksum "ParkwayCore/pom.xml" }}
@@ -46,9 +37,8 @@ jobs:
           destination: target/ParkwayCore-0.1.jar
 
   ParkwayCommon:
-     #<<: *defaults
     docker:
-     #  specify the version you desire here
+      # specify the version you desire here
       - image: circleci/openjdk:8-jdk
 
     working_directory: ~/CIDependency
@@ -61,7 +51,7 @@ jobs:
        #   keys:
         #  - parkwaycommon-{{ checksum "ParkwayCommon/pom.xml" }}
          
-      - run: cd ParkwayCommon && mvn package && mvn install
+      - run: cd ParkwayCommon && mvn clean package && mvn install
 
       #- save_cache:
        #   paths:
