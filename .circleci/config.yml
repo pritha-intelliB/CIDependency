@@ -34,12 +34,7 @@ jobs:
       #- run: cp -r ParkwayCore/target/ParkwayCore-0.1.jar ~/.m2/repository/com/parkway/ParkwayCore/0.1/
       #- run: cp ParkwayCore/pom.xml ~/.m2/repository/com/parkway/ParkwayCore/0.1/ParkwayCore-0.1.pom
       #- run: ls .m2
-      - store_artifacts:
-          path: ParkwayCore/target/ParkwayCore-0.1.jar
-          destination: target/ParkwayCore-0.1.jar
-      - store_artifacts:
-          path: ParkwayCommon/target/ParkwayCommon-0.1.jar
-          destination: target/ParkwayCommon-0.1.jar
+      
       - store_artifacts:
           path: MedicalServices/target/medical-0.1.war
           destination: target/medical-0.1.war
