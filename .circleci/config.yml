@@ -2,14 +2,19 @@
 #
 # Check https://circleci.com/docs/2.0/language-java/ for more details
 #
+defaults: &defaults
+  working_directory: ~/CIDependency
+  docker:
+    - image: circleci/openjdk:8-jdk
 version: 2
 jobs:
-  ParkwayCore:
-    docker:
+   ParkwayCore:
+     <<: *defaults
+   # docker:
       # specify the version you desire here
-      - image: circleci/openjdk:8-jdk
+   #   - image: circleci/openjdk:8-jdk
 
-    working_directory: ~/CIDependency
+   # working_directory: ~/CIDependency
        
     steps:
       - checkout
@@ -38,11 +43,12 @@ jobs:
           destination: target/ParkwayCore-0.1.jar
 
   ParkwayCommon:
-    docker:
+     <<: *defaults
+    #docker:
       # specify the version you desire here
-      - image: circleci/openjdk:8-jdk
+     # - image: circleci/openjdk:8-jdk
 
-    working_directory: ~/CIDependency
+    #working_directory: ~/CIDependency
        
     steps:
       - checkout

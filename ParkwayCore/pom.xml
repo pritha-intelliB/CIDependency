@@ -7,7 +7,7 @@
   <version>0.1</version>
   <packaging>jar</packaging>
 
-  <name>ParkwayCode</name>
+  <name>ParkwayCore</name>
   <!--<url>http://maven.apache.org</url>-->
 
   <properties>
