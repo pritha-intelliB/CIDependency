@@ -21,6 +21,7 @@ jobs:
             - parkwayCore-{{ checksum "ParkwayCore/pom.xml" }}
       - run: rm -rf ~/.m2/repository/com/parkway   
       - run: cd ParkwayCore && mvn clean package && mvn install
+      - run: cd ParkwayCommon && mvn clean package && mvn install
 
       - save_cache:
             key: ParkwayCore-{{ checksum "ParkwayCore/pom.xml" }}
@@ -36,22 +37,22 @@ jobs:
           path: ParkwayCore/target/ParkwayCore-0.1.jar
           destination: target/ParkwayCore-0.1.jar
 
-  ParkwayCommon:
-    docker:
+ # ParkwayCommon:
+ #   docker:
       # specify the version you desire here
-      - image: circleci/openjdk:8-jdk
+ #     - image: circleci/openjdk:8-jdk
 
-    working_directory: ~/CIDependency
+ #   working_directory: ~/CIDependency
        
-    steps:
-      - checkout
+ #   steps:
+ #     - checkout
       
       ## Download and cache dependencies
       #- restore_cache:
        #   keys:
         #  - parkwaycommon-{{ checksum "ParkwayCommon/pom.xml" }}
          
-      - run: cd ParkwayCommon && mvn clean package && mvn install
+  #    - run: cd ParkwayCommon && mvn clean package && mvn install
 
       #- save_cache:
        #   paths:
@@ -59,13 +60,13 @@ jobs:
          # key: ParkwayCommon-{{ checksum "ParkwayCommon/pom.xml" }}
         
       # run tests!
-      - run: cd ParkwayCommon && mvn integration-test
+  ##    - run: cd ParkwayCommon && mvn integration-test
       #- run: cp -r ParkwayCore/target/ParkwayCore-0.1.jar ~/.m2/repository/com/parkway/ParkwayCore/0.1/
       #- run: cp ParkwayCore/pom.xml ~/.m2/repository/com/parkway/ParkwayCore/0.1/ParkwayCore-0.1.pom
       #- run: ls ~/.m2/repository/com/parkway/ParkwayCore/0.1
-      - store_artifacts:
-          path: ParkwayCommon/target/ParkwayCommon-0.1.jar
-          destination: target/ParkwayCommon-0.1.jar
+  #    - store_artifacts:
+  #        path: ParkwayCommon/target/ParkwayCommon-0.1.jar
+  #        destination: target/ParkwayCommon-0.1.jar
 
   MedicalSerivces:
     docker:
