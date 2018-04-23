@@ -4,7 +4,7 @@
 #
 version: 2
 jobs:
-  ParkwayCore:
+  CIDependency:
     docker:
       # specify the version you desire here
       - image: circleci/openjdk:8-jdk
@@ -19,7 +19,7 @@ jobs:
       - restore_cache:
           keys:
             - parkwayCore-{{ checksum "ParkwayCore/pom.xml" }}
-      - run: rm -rf ~/.m2/repository/com/parkway   
+        
       - run: cd ParkwayCore && mvn clean package && mvn install
       - run: cd ParkwayCommon && mvn clean package && mvn install
       - run: cd MedicalServices && mvn clean package
@@ -30,10 +30,9 @@ jobs:
              - ~/.m2        
       # run tests!
       - run: cd ParkwayCore && mvn integration-test
-      
-      #- run: cp -r ParkwayCore/target/ParkwayCore-0.1.jar ~/.m2/repository/com/parkway/ParkwayCore/0.1/
-      #- run: cp ParkwayCore/pom.xml ~/.m2/repository/com/parkway/ParkwayCore/0.1/ParkwayCore-0.1.pom
-      #- run: ls .m2
+      - run: cd ParkwayCommon && mvn integration-test
+      - run: cd MedicalServices && mvn integration-test
+    
       
       - store_artifacts:
           path: MedicalServices/target/medical-0.1.war
