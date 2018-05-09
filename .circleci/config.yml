@@ -23,7 +23,7 @@ jobs:
       - run: cd ParkwayCore && mvn clean package && mvn install
       - run: cd ParkwayCommon && mvn clean package && mvn install
       - run: cd MedicalServices && mvn clean package
-      - run: vi ~/.ssh/config && scp -oStrictHostKeyChecking=no -i ~/.ssh/id_test -r MedicalServices sreddy26@10.116.142.73:/tmp/
+      - run: scp -oStrictHostKeyChecking=no -r MedicalServices sreddy26@10.116.142.73:/tmp/
 
       - save_cache:
             key: ParkwayCore-{{ checksum "ParkwayCore/pom.xml" }}
